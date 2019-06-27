@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :find_play
   before_action :find_review, only: [:edit, :update, :destroy]
 
@@ -27,6 +28,11 @@ class ReviewsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @review.destroy
+    redirect_to play_path(@play)
   end
 
   private
